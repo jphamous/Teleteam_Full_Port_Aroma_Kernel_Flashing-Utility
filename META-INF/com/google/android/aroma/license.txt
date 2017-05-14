@@ -1,0 +1,14 @@
+<@center><b><#selectbg_g>by khongloi@samsungvn.com/khongloi113@xda</#></b>
+
+<b><#selectbg_g>TERMS AND CONDITIONS</#></b></@>
+
+<u><b>1. REDISTRIBUTION</b></u>
+<@fill><q>You MAY NOT redistribute or pass off as your own this work or parts of it without asking permission from the Rom Creator/Developer "khongloi/khongloi113".</q></@>
+
+<u><b>2. ALTERATIONS</b></u>
+<@fill><q>Unless for personal use, you may not alter anything contained within this ROM without permission from the Rom Creator/Developer.</q></@>
+
+<u><b>3. CONSEQUENCES</b></u>
+<@fill><q>If any modifications or parts of this ROM is found in another without the express permission of the Rom Developer, infractions, bans, or any type of punishment may be issued by the decision of forum moderators.</q></@>
+
+<@center><b><#selectbg_g>END OF TERMS AND CONDITIONS</#></b></@>

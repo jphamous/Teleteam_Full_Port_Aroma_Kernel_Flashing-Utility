@@ -1,0 +1,179 @@
+﻿#----------------------------------------------------------------------------------------
+#### LICENSE
+#----------------------------------------------------------------------------------------
+#
+# Copyright (C) 2011 Ahmad Amarullah ( http://amarullz.com/ )
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+ini_set("force_colorspace","rgba");
+### FILE INFO:
+#
+# AROMA Installer 2.70RC2 - AROMA Installer Test Script Configuration
+#       (c) 2011-2012 by Ahmad Amarullah
+#           amarullz - xda-developers
+#           http://www.amarullz.com/
+#
+#       Binary Version  : 2.70RC2
+#       Binary Codename : Edelweis
+#
+#
+
+#----------------------------------------------------------------------------------------
+### ROM INFORMATION
+#----------------------------------------------------------------------------------------
+theme("miuity");
+ini_set("rom_name",             "Teleteam Kernel Nougat");
+ini_set("rom_version",          "V3");
+ini_set("rom_author",           "Jphamous");
+ini_set("rom_device",           "N920P/G928P");
+ini_set("rom_date",             "05/09/2017");
+
+#----------------------------------------------------------------------------------------
+# Show Animated Splash
+#----------------------------------------------------------------------------------------
+
+anisplash(
+#  #-- Number of Loop
+    4,  
+  #-- Frame 1 [ Image, duration in millisecond ]. <AROMA Resource Dir>/splash/a[1..6].png
+    "splash/a1", 500,
+    "splash/a2", 30,
+    "splash/a3", 30,
+    "splash/a4", 30,
+    "splash/a5", 30,
+    "splash/a6", 30
+);
+
+#----------------------------------------------------------------------------------------
+# Set Small Font to Support all fonts
+#----------------------------------------------------------------------------------------
+fontresload( "0", "ttf/Roboto-Regular.ttf;ttf/DroidSansFallback.ttf;", "12" ); #-- Use sets of font (Font Family)
+fontresload( "1", "ttf/Roboto-Regular.ttf;ttf/DroidSansFallback.ttf;", "14" ); #-- Use sets of font (Font Family)
+
+theme("miuity");
+loadlang("langs/en.lang");
+
+#----------------------------------------------------------------------------------------
+# WELCOME
+#----------------------------------------------------------------------------------------
+
+viewbox(
+"WELCOME",
+"INSTALL <b>"+
+ini_get("rom_name")+
+"</b> FOR <b>"+ini_get("rom_device")+"</b>.\n\n"+
+"INFORMATION OF THE ROM:\n\n"+
+" THE NAME \t: <b><#selectbg_g>"+ini_get("rom_name")+"</#></b>\n"+
+" THE VERSION\t: <b><#selectbg_g>"+ini_get("rom_version")+"</#></b>\n"+
+" THE DATE\t: <b><#selectbg_g>"+ini_get("rom_date")+"</#></b>\n"+
+" THE DEVELPER\t: <b><#selectbg_g>"+ini_get("rom_author")+"</#></b>\n"+
+"PRESS NEXT TO CONTINUE",
+"@welcome"
+);
+
+#----------------------------------------------------------------------------------------
+# AGREEBOX
+#----------------------------------------------------------------------------------------
+
+agreebox(
+"TERMS AND CONDITIONS",
+"TERMS AND CONDITIONS",
+"@license",
+resread("license.txt"),
+"I AGREE WITH TERMS AND CONDITIONS",
+"YOU MUST AGREE WITH TERMS AND CONDITIONS FIRST"
+);
+
+# Devices
+#----------------------------------------------------------------------------------------
+
+selectbox(
+	"Devices Option",
+	"Choose your device",
+	"@Device",
+	"device.prop",
+		  
+	"Is your device:","",         					        											2,	#-- Group 1. key = "selected.1"
+	"N920P",								       "Note 5 N920T/N920W8",					            1,	#-- selected.1 = 1
+	"G928P",			   	                       "S6+  G928P",		    				            0,	#-- selected.1 = 2
+	"N920 Korea N920S/K/L",						   "Note 5 Korea N920S/K/L",				            0,	#-- selected.1 = 3
+	"N9208",								   	   "Note 5 Dualsim N9208",					            0,	#-- selected.1 = 4
+	"G928T/G928w8",								   "S6+ G928T/G928w8",						            0,	#-- selected.1 = 5
+	"G928F",								   	   "S6+ International G928F",				            0,	#-- selected.1 = 6
+	"G928S/K/L",							   	   "S6+ Korea G928S/K/L",				 		        0	#-- selected.1 = 7
+);
+
+#---------------------------------------------------------------------------------------- 
+#Root Choices
+#----------------------------------------------------------------------------------------
+
+selectbox(
+ "Root Choices",
+ "Select Root Options.",
+ "@Root",
+ "root.prop",
+ 
+	"Select one","", 	        				        							2,	#-- Group 1. key = "selected.1"
+	"SuperSu",                 "Install SuperSu",    								1,	#-- selected.1 = 1
+    "Magisk",                         "Install Magisk",         					0,	#-- selected.1 = 2
+	"No Root",                         "No Root",         							0	#-- selected.1 = 3
+);
+
+ini_set("text_next", "Install Now"); 
+
+#---------------------------------------------------------------------------------------- 
+# INSTALLATION
+#---------------------------------------------------------------------------------------- 
+
+viewbox(
+"NOW THE INSTALLATION READY TO START",
+"PRESS NEXT TO CONTINUE TO START\n"+
+"TO CHANGE YOUR OPTIONS PRESS BACK",
+"@install"
+);
+
+ini_set("text_next", "Next");
+
+setvar("retstatus",
+	install(
+	"",
+	"<b>"+ini_get("rom_name")+"</b> INSTALLATION\n"+
+	"PLEASE WAIT WHILE INSTALLATION FINISHING INSTALLING <b>"+ini_get("rom_name")+
+	"</b> THIS PROCESS WILL TAKE SOME TIME",	
+	"@install",	
+	"THE INSTALLATION FINISHED FROM INSTALLING <b>"+ini_get("rom_name")+
+	"</b> PRESS NEXT TO CONTINUE"
+	)
+);
+
+ini_set("text_next", "Finish");
+
+#---------------------------------------------------------------------------------------- 
+# Finish
+#---------------------------------------------------------------------------------------- 
+
+checkviewbox(
+"",
+"<#selectbg_g><b>INSTALLTION COMPLETED</b></#>\n\n"+
+"<b>"+ini_get("rom_name")+"</b> NOW INSTALLED IN YOUR PHONE",
+"@welcome",
+"REBOOT DEVICE",
+"0",
+"reboot_it"
+);
+
+if getvar("reboot_it")=="1"
+then
+splash(3000, "SHUTDOWN");
+reboot("onfinish");
+endif;
